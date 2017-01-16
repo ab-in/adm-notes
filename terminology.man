@@ -1,0 +1,14 @@
+//TERMINOLOGY - AWESOME XTERM EMULATOR//
+
+PPA SOURCE
+
+        sudo add-apt-repository ppa:hannes-janetzek/enlightenment-svn
+
+AWESOME COMMANDS
+    
+tycat   - preview image file 
+typop   - preview  video-filename
+tybg    - sets background of terminal
+tybg "" - clears background of terminal
+tyls    - lists contents of directory; includes a thumbnail and allows preview 
+tyls -m - "-m" parameter gives a larger icon view

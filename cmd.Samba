@@ -1,0 +1,67 @@
+SAMBA USER
+============================
+# User must exists on the host machine:
+    useradd [user] - create user on host
+        or
+    adduser [user] --shell=/bin/false
+# Adding samba-user:
+    smbpasswd -a [Username] - create Samba-user
+              -x - delete user
+              -d - deactivation of user samba acoount
+              -e - activation
+    smbpasswd [user] - change user passwd
+
+SAMBA SERVER CONFIGURATION
+==========================
+# /etc/samba/smb.conf
+# Section [global]
+# Section Authentication
+
+ENABLE WITH NET
+===============
+net usershare add <Sharename> <Pfad> [optionen]
+net usershare delete <Sharename>
+net usershare list [ -l ] (-l > lange Ausgabe)
+net usershare info [ -l ] [<Sharename>]
+    usershare add - rewrite/change
+Access Control Lists:
+    acl <usesrname>:F | R | D
+                    F - write/read access
+                    R - read access only
+                    D - deny access
+
+LIST USERS AND SHARES
+=====================
+smbclient -L yourhostname
+smbclient -L is net rpc share list -U $USERNAME
+net usershare list
+pdbedit -v -u userid | grep "Password must change" - lists user needs to change password
+
+TESTING CONFIGURATION
+=====================
+testparm
+net usershare info
+smbstatus - actual connections of Samba-Shares
+
+MOUNTING SAMBA-SHARES ON LINUX
+==============================
+apt install smbclient
+apt install cifs-utils (cifs: Common Internet File System)
+smbmount
+for fstab: FS-Type smbfs
+mount -t cifs //Server/Accesspoint /mountpoint -o [Parameter]
+
+DAEMON
+======
+/etc/init.d/samba restart || service samba restart
+#Upstart needs to start nmbd and samba server separetly
+
+ACCESS TO SHARES AS NORMAL USER
+===============================
+# test my own shares
+    smbclient //<server || IP>/ich
+# test other shares
+    smbclient //<server || IP>du
+# common shares testing
+    smbclient //<server || IP/our>
+
